@@ -1,0 +1,14 @@
+@using DecaBlogMVC.Utilities
+@model DecaBlogMVC.Models.Api.BlogPostVM;
+
+<a class="flex justify-between space-x-5" asp-controller="Articles" asp-action="GetSingleArticle" asp-route-id="@Model.Id">
+    <img class="aspect-[16/10] w-2/5 overflow-hidden object-cover object-center" src="@Model.ImageUrl"/>
+    <div class="flex w-3/5 flex-col justify-evenly">
+        <p class="text-xl font-semibold text-gray-800">
+            @Model.Title
+        </p>
+        <p>
+            @Model.Text.ShortenText(50)
+        </p>
+    </div>
+</a>

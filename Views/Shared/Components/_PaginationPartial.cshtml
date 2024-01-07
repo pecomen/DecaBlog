@@ -1,0 +1,29 @@
+@model PaginationVM
+
+<nav role="navigation" aria-label="Pagination Navigation" class="mt-4 flex justify-between">
+    @if (Model.PreviousPage != null)
+    {
+        <a asp-route-page="@Model.PreviousPage" class="button">
+            Previous
+        </a>
+    }
+    else
+    {
+        <button class="button-tertiary" disabled>
+            Previous
+        </button>
+    }
+
+    @if (Model.NextPage != null)
+    {
+        <a asp-route-page="@Model.NextPage" class="button">
+            Next
+        </a>
+    }
+    else
+    {
+        <button class="button-tertiary" disabled>
+            Next
+        </button>
+    }
+</nav>

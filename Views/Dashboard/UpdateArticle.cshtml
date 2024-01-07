@@ -1,0 +1,97 @@
+﻿@model CreateArticleDto
+
+<link href="~/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="~/js/froala_editor.pkgd.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+@*
+<partial name="_WriteArticleNavBarPartial" />*@
+
+<section class="position-absolute d-flex flex-column w-100 h-100" style="left: 0; ">
+    <div class="container">
+        <div class="mt-5">
+            <h3 class="mb-3" style="font-size: 1.2rem; font-family: 'Inter'; letter-spacing: .1px;">Update Article</h3>
+            <form method="post" asp-area="" asp-controller="Articles" asp-action="CreateArticle" id="articleForm">
+                <div class="d-flex flex-column justify-content-between pb-4 h-100">
+                    @if (Model != null)
+                    {
+                        <div id="" class="col p-0 d-flex align-items-center mb-3">
+                            <input name="Title" id="@Model.Title" class="form-control input-ify" placeholder="Title">
+                        </div>
+                    }
+                    @if (Model != null)
+                    {
+                        <div id="@Model.PublicId" class="col p-0 d-flex align-items-center mb-3 pb-3">
+                            <input name="PublicId" id="@Model.PublicId" class="form-control input-ify" placeholder="Public-Id">
+                        </div>
+                    }
+                    @if (Model != null)
+                    {
+                        <div class="col mb-3 pb-3">
+                            <label for="imageUrl" class="form-label"></label>
+                            <input type="text" name="ImageUrl" id="@Model.ImageUrl" class="form-control" placeholder="Enter Image URL">
+                        </div>
+                    }
+                    <select class="col form-control form-select input-ify pb-3 mb-3" asp-for="Tags">
+                        <option class="small text-secondary" selected disabled>--- Select Tag Option ---</option>
+                        @if (Model != null)
+                        {
+                            @foreach (var tag in Model.Tags)
+                            {
+                                <option value="@tag.Id">@tag.Name</option>
+                            }
+                        }
+                    </select>
+
+                    <div class="col-12 mb-3" id="@Model.Text">
+                        <textarea name="Text" id="article-ify" class="form-control" placeholder="Tell your story...."></textarea>
+                    </div>
+                </div>
+                <div>
+                    <button id="publishButton" class="btn btn-success">Update</button>
+                </div>
+            </form>
+            <script>
+                var editor = new FroalaEditor("#article-ify", {
+                    marginTop: 200,
+                    heightMin: 300,
+                    heightMax: 500,
+                })
+            </script>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $('#publishButton').click(function (e) {
+            e.preventDefault();
+
+            var formData = {
+                Title: $('#articleForm input[name="Title"]').val(),
+                PublicId: $('#articleForm input[name="PublicId"]').val(),
+                ImageUrl: $('#articleForm input[name="ImageUrl"]').val(),
+                TagId: $('#articleForm select[name="TagId"]').val().map(function (tagId) {
+                    return { Id: tagId, Name: $("#articleForm select[name='TagId'] option[value='" + tagId + "']").text() };
+                }),
+                Content: $('#articleForm textarea[name="Text"]').val()
+                // Add other form fields as needed
+            };
+
+            $.ajax({
+                url: '/DashBoard/CreateArticle',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    console.log(response);
+                    window.alert("Article Created Successfully"); // Corrected here
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+
+        });
+    });
+</script>
+

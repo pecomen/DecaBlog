@@ -1,0 +1,95 @@
+﻿@model CreateArticleDto
+
+<partial name="_LandingPageNavPartial"/>
+
+<link href="~/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="~/js/froala_editor.pkgd.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<section class="position-absolute d-flex flex-column w-100 h-100" style="left: 0; ">
+    <div class="container">
+        <div class="mt-5">
+            @if (ViewBag.ErrorMessage is not null)
+            {
+                <p class="my-3 py-2 px-5 bg-red-100 text-red-600 font-semibold rounded-md">@ViewBag.ErrorMessage</p>
+            }
+            <h3 class="mb-3" style="font-size: 1.2rem; font-family: 'Inter'; letter-spacing: .1px;">Create Article</h3>
+            <div asp-validation-summary="All" class="text-red-500 text-sm mb-3 my-2 italic"></div>
+            <form method="post" asp-controller="Articles" asp-action="CreateArticle" id="articleForm" enctype="multipart/form-data">
+                <div class="d-flex flex-column justify-content-between pb-4 h-100">
+                    <div id="" class="col p-0 d-flex align-items-center mb-3">
+                        <input asp-for="@Model.Title" required class="input" placeholder="Title">
+                    </div>
+
+                    <div class="col mb-2 pb-3">
+                        <label for="Image" class="form-label"></label>
+                        <input type="file" asp-for="@Model.Image" required class="input" placeholder="Enter Image URL">
+                    </div>
+
+                    <select class="input mb-2" asp-for="@Model.TagId">
+                        <option selected disabled>--- Select Tag Option ---</option>
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <option value="@tag.Id">@tag.Name</option>
+                        }
+                    </select>
+
+                    <div class="col-12 mb-3" id="@Model.Text">
+                        <textarea name="Text" id="article-ify" class="input" placeholder="Tell your story...."></textarea>
+                    </div>
+                </div>
+                <div>
+                    <button id="publishButton" class="button" type="submit">Submit</button>
+                </div>
+            </form>
+            <script>
+                var editor = new FroalaEditor("#article-ify", {
+                    marginTop: 200,
+                    heightMin: 300,
+                    heightMax: 500,
+                })
+            </script>
+        </div>
+    </div>
+</section>
+
+<script>
+    // $(document).ready(function () {
+    //     $('#publishButton').click(function (e) {
+    //         // e.preventDefault();
+    //
+    //         var formData = {
+    //             Title: $('#articleForm input[name="Title"]').val(),
+    //             PublicId: $('#articleForm input[name="PublicId"]').val(),
+    //             ImageUrl: $('#articleForm input[name="ImageUrl"]').val(),
+    //             TagId: $('#articleForm select[name="TagId"]').val().map(function (tagId) {
+    //                 return { Id: tagId, Name: $("#articleForm select[name='TagId'] option[value='" + tagId + "']").text() };
+    //             }),
+    //             Content: $('#articleForm textarea[name="Text"]').val()
+    //             // Add other form fields as needed
+    //         };
+    //
+    //         $.ajax({
+    //             url: '/DashBoard/CreateArticle',
+    //             method: 'POST',
+    //             contentType: 'application/json',
+    //             data: JSON.stringify(formData),
+    //             success: function (response) {
+    //                 console.log(response);
+    //
+    //
+    //                 if (response.success) {
+    //
+    //                     window.location.href = '/DashBoard/_SuccessConfirmationModalPartial';
+    //                 } else {
+    //                     console.error(response.message);
+    //                 }
+    //             },
+    //             error: function (error) {
+    //                 console.error(error);
+    //             }
+    //         });
+    //
+    //     });
+    // });
+</script>

@@ -1,0 +1,28 @@
+﻿@using DecaBlogMVC.Utilities
+@model DecaBlogMVC.Models.Api.BlogPostVM
+
+<a class="flex justify-between space-x-5" asp-controller="Editor" asp-action="OpenArticle" asp-route-articleId="@Model.Id">
+    <div class="w-1/2 flex flex-col justify-evenly">
+        <div class="flex items-center mb-2 space-x-4">
+        </div>
+        <p class="text-gray-800 font-semibold text-xl">@Model.Title</p>
+        <p>
+            @Model.Text.ShortenText(100)
+        </p>
+
+        <div class="flex items-center space-x-4 text-gray-500 text-sm">
+            <p>Submit</p>
+            <hr class="w-6"/>
+            <p>@Model.CreatedOn.FormatDate()</p>
+        </div>
+    </div>
+    <img class="aspect-[16/10] w-1/4 overflow-hidden object-cover object-center" src="@Model.ImageUrl"/>
+    <div class="w-1/4 flex justify-center space-x-2 items-center">
+        <form method="POST" asp-controller="Editor" asp-action="ApproveArticle" asp-route-articleId="@Model.Id">
+            <button type="submit" class="button">Publish</button>
+        </form>
+        <form method="POST" asp-controller="Editor" asp-action="RejectArticle" asp-route-articleId="@Model.Id">
+            <button type="submit" class="button-secondary">Reject</button>
+        </form>
+    </div>
+</a>

@@ -1,0 +1,18 @@
+﻿@using DecaBlogMVC.Utilities
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model DecaBlogMVC.Models.Api.BlogPostVM;
+
+<a class="flex space-x-6 bg-white p-2 border-b border-slate-50" asp-controller="Articles" asp-action="GetSingleArticle" asp-route-id="@Model.Id">
+    <div>
+        <p class="mb-2 text-lg font-semibold text-gray-800">@Model.Title</p>
+        <p class="text-slate-400">
+            @Model.Text.ShortenText(50)
+        </p>
+    </div>
+    <div class="flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="17" viewBox="0 0 21 17" fill="none">
+            <path d="M1.47168 8.65556L18.3488 8.65556" stroke="#121212" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12.4419 0.923862L20 8.36572L12.4419 15.8076" stroke="#121212" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+</a>

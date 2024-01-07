@@ -1,0 +1,68 @@
+@model PublishedArticlesVM;
+
+<partial name="_LandingPageNavPartial"/>
+
+<div class="container">
+    <div class="flex flex-col justify-start items-start mt-10 md:flex-row md:space-x-10">
+        <div class="flex flex-col space-y-8 md:w-3/4">
+
+            <div id="wrapper">
+                <div id="tabContainer">
+                    <div id="tabs">
+                        <ul>
+                            <li id="tabHeader_1" class="tabActiveHeader"><a asp-controller="Story" asp-action="PublishedArticles">Published Articles</a></li>
+                            <li id="tabHeader_2"><a asp-controller="Story" asp-action="PendingArticles">Pending Articles</a></li>
+                            <li id="tabHeader_3"><a asp-controller="Story" asp-action="RejectedArticles">Rejected Articles</a></li>
+                        </ul>
+                    </div>
+                    <div id="tabscontent ">
+                        <div class="tabpage space-y-8 mt-6" id="tabpage_1">
+                            @foreach (var published in Model.PublishedArticles)
+                            {
+                                <partial name="Components/_PendingListArticlePartial" model="published"/>
+                            }
+                            
+                            @if (!Model.PublishedArticles.Any())
+                            {
+                                <p class="text-center">No published articles yet.</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col space-y-5 w-full mt-10 md:mt-0 md:w-2/5">
+            <div>
+                <p class="font-semibold">AUTHORS</p>
+                <div class="mt-2">
+                    @foreach (var topAuthor in Model.TopAuthors)
+                    {
+                        <partial name="Components/_AuthorListItemPartial" model="@topAuthor"/>
+                    }
+                </div>
+            </div>
+
+            <div class="">
+                <p class="font-semibold">MORE TOPICS</p>
+                <div class=" mt-2 p-1">
+                    @foreach (var tag in Model.AllTags)
+                    {
+                        <partial name="Components/_TagComponentPartial" model="@tag"/>
+                    }
+                </div>
+
+            </div>
+
+            <div>
+                <p class="font-semibold">RECOMMENDATIONS</p>
+                <div class="mt-2">
+                    @foreach (var recentpost in Model.RecentBlogPosts)
+                    {
+                        <partial name="Components/_BlogPostRecommendationItemPartial" model="@recentpost"/>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

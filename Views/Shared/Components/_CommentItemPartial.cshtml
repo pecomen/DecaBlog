@@ -1,0 +1,14 @@
+﻿@using DecaBlogMVC.Utilities
+@model CommentListItemVM;
+
+<div>
+    <div class="mb-3 flex items-center space-x-8 text-sm">
+        <div class="flex items-center">
+            <img class="mr-2 aspect-square h-10 rounded-full text-gray-900" src="@Model.Image"/>
+            <p>@Model.Name</p>
+        </div>
+        <p class="text-gray-600">@Model.CreatedOn.FormatDate()</p>
+    </div>
+
+    <p class="mb-3 text-sm">@Model.Text</p>
+</div>
