@@ -45,7 +45,7 @@ namespace DecaBlogMVC.Controllers
         [HttpGet]
         public IActionResult SignUp()
         {
-            if(HttpContext.User.Identity != null && HttpContext.User.Identity.IsAuthenticated)
+            if (HttpContext.User.Identity != null && HttpContext.User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
             return View();
         }
@@ -54,9 +54,9 @@ namespace DecaBlogMVC.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if(HttpContext.User.Identity != null && HttpContext.User.Identity.IsAuthenticated)
+            if (HttpContext.User.Identity != null && HttpContext.User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
-            
+
             if (!ModelState.IsValid)
                 return View(model);
 
